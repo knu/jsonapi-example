@@ -49,5 +49,8 @@ module JsonapiExample
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.middleware.use Committee::Middleware::RequestValidation, schema_path: Rails.root.join('schema', 'openapi.yml')
+    config.middleware.use Committee::Middleware::ResponseValidation, schema_path: Rails.root.join('schema', 'openapi.yml') unless Rails.env.production?
   end
 end

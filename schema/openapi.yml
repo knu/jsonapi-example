@@ -1,0 +1,191 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Articles
+servers:
+  - url: http://jsonapi-example.local/
+paths:
+  /api/v1/articles:
+    get:
+      summary: List all articles
+      operationId: listArticles
+      tags:
+        - articles
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: page
+          in: query
+          description: Which page to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of articles
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticlesResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      summary: Create an article
+      operationId: createArticles
+      tags:
+        - articles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArticleParameters"
+      responses:
+        '201':
+          description: Created article
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticleResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/articles/{id}:
+    get:
+      summary: Info for a specific article
+      operationId: showArticleById
+      tags:
+        - articles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the article to retrieve
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArticleResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    Article:
+      type: object
+      required:
+        - id
+        - type
+        - attributes
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: ["article"]
+        attributes:
+          type: object
+          required:
+            - title
+            - content
+          properties:
+            title:
+              type: string
+            content:
+              type: string
+    ArticleParameters:
+      type: object
+      required:
+        - title
+        - content
+      properties:
+        title:
+          type: string
+          description: The title of an article
+        content:
+          type: string
+          description: The title of an article
+    Articles:
+      type: array
+      items:
+        $ref: "#/components/schemas/Article"
+    ArticleResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: '#/components/schemas/Article'
+    ArticlesResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+    ErrorResponse:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: A unique identifier for this occurence
+              links:
+                type: object
+                description: A links object
+                properties:
+                  about:
+                    type: string
+                    description: link that leads to details about this occurence
+              status:
+                type: string
+                description: HTTP status code
+              code:
+                type: string
+                description: Application Specific Error Code
+              title:
+                type: string
+                description: Human-readable summary of the problem
+              detail:
+                type: string
+                description: Human-readable explanation of the problem
+              source:
+                type: object
+                description: Contains references to the source of the problem
+              meta:
+                type: object
+                description: Non-standard meta-information about the issue/error
