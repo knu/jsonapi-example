@@ -1,0 +1,7 @@
+<%=
+  raw({
+    meta: @metadata,
+    error: @error,
+    data: Oj.load(yield)
+  }.compact.to_json)
+%>
