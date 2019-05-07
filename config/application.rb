@@ -69,6 +69,6 @@ module JsonapiExample
     end
 
     config.middleware.use Committee::Middleware::RequestValidation, schema_path: Rails.root.join('schema', 'openapi.yml'), error_class: ValidationError
-    config.middleware.use Committee::Middleware::ResponseValidation, schema_path: Rails.root.join('schema', 'openapi.yml'), error_class: ValidationError unless Rails.env.production?
+    config.middleware.use Committee::Middleware::ResponseValidation, schema_path: Rails.root.join('schema', 'openapi.yml'), error_class: ValidationError if Rails.env.development?
   end
 end
