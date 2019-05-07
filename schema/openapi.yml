@@ -35,13 +35,13 @@ paths:
               schema:
                 type: string
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 $ref: "#/components/schemas/ArticlesResponse"
         default:
           description: unexpected error
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
     post:
@@ -52,20 +52,20 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          application/vnd.api+json:
             schema:
               $ref: "#/components/schemas/ArticleParameters"
       responses:
         '201':
           description: Created article
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 $ref: "#/components/schemas/ArticleResponse"
         default:
           description: unexpected error
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
   /api/v1/articles/{id}:
@@ -85,13 +85,13 @@ paths:
         '200':
           description: Expected response to a valid request
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 $ref: "#/components/schemas/ArticleResponse"
         default:
           description: unexpected error
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 components:
