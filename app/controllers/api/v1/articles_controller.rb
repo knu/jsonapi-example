@@ -12,8 +12,8 @@ class Api::V1::ArticlesController < ApplicationController
   end
 
   def create
-    @articles = Article.create!(article_params)
-    render :index, status: :created
+    @article = Article.create!(article_params)
+    render :show, status: :created
   end
 
   private def article_params
