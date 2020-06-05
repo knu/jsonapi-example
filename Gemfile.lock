@@ -107,7 +107,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     oj (3.7.12)
     openapi_parser (0.2.5)
-    puma (3.12.3)
+    puma (3.12.6)
     rabl (0.14.1)
       activesupport (>= 2.3.14)
     rabl-rails (0.5.5)
@@ -203,7 +203,7 @@ GEM
       railties (>= 5.0)
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.3)
+    websocket-extensions (0.1.5)
 
 PLATFORMS
   ruby
